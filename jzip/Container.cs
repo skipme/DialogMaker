@@ -126,12 +126,12 @@ namespace DialogMaker.jzip
                 //File.Move(FileName, fileLocation);
                 //LinkFile(fileLocation);
                 if (customCopy == null)
-                    File.Copy(FileName, fileLocation);
+                    File.Copy(FileName, fileLocation, true);
                 else
                     customCopy(FileName, fileLocation);// optional encoding
                 LinkFile(FileName);
             }
-            catch(Exception exc)
+            catch (Exception exc)
             {
                 System.Windows.Forms.MessageBox.Show("Error while savings: " + exc.Message);
                 LinkFile(FileName);
