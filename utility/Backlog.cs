@@ -78,7 +78,7 @@ namespace DialogMaker
             if (commands.Count >= max + 10)
             {
                 commands.RemoveRange(0, 10);
-                currentcommand--;
+                currentcommand -= 10;
             }
             //
 
