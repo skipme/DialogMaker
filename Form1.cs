@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace DialogMaker
 {
@@ -326,8 +327,22 @@ namespace DialogMaker
             }
             dialogs1.Refresh();
         }
+        private System.Security.SecureString pwd = null;
         private string PasswordRequest()
         {
+            if(pwd != null)
+            {
+                IntPtr valuePtr = IntPtr.Zero;
+                try
+                {
+                    valuePtr = Marshal.SecureStringToGlobalAllocUnicode(pwd);
+                    return Marshal.PtrToStringUni(valuePtr);
+                }
+                finally
+                {
+                    Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
+                }
+            }
             string pwd_p = "";
             PWD_INPUT pwd_dlg = new PWD_INPUT();
             pwd_dlg.Icon = this.Icon;
@@ -335,6 +350,15 @@ namespace DialogMaker
             if (dr != System.Windows.Forms.DialogResult.OK) return null;
 
             pwd_p = pwd_dlg.pwd_ref;
+            if(pwd_dlg.save_for_Session)
+            {
+                pwd = new System.Security.SecureString();
+                foreach (var item in pwd_p)
+                {
+                    pwd.AppendChar(item);
+                }
+                saveSecurityKeyToolStripMenuItem.Visible = true;
+            }
             pwd_dlg.Dispose();
 
             return pwd_p;
@@ -836,7 +860,12 @@ namespace DialogMaker
 
         private void SaveSecurityKeyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (pwd != null)
+            {
+                pwd.Clear();
+                pwd = null;
+            }
+            saveSecurityKeyToolStripMenuItem.Visible = false;
         }
 
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)

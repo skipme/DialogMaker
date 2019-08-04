@@ -17,10 +17,13 @@ namespace DialogMaker
         }
 
         public string pwd_ref;
+        public bool save_for_Session;
         private void button1_Click(object sender, EventArgs e)
         {
-            pwd_ref = textBox1.Text.ToString();
-            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.save_for_Session = this.checkBox1.Checked;
+            this.pwd_ref = this.textBox1.Text.ToString();
+
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;           
             this.Close();
         }
 
