@@ -41,6 +41,7 @@ namespace DialogMaker
         string CopyJsonTree(int index);
         void ParseJsonTree(string json);
 
-        void SetFont(System.Drawing.Font fontRef);
+        void SetFont(System.Drawing.Font fontRef); 
+        IEnumerable<(int, Phrase)> SearchPhrase(string contains, bool left = true, bool right = true);
     }
 }

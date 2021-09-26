@@ -311,5 +311,9 @@ namespace DialogMaker
         {
             baseDialog.SetFont(fontRef);
         }
+        public IEnumerable<(int, Phrase)> SearchPhrase(string contains, bool left = true, bool right = true)
+        {
+            return baseDialog.SearchPhrase(contains, left, right);
+        }
     }
 }

@@ -327,6 +327,16 @@ namespace DialogMaker
             if (this.PaintSpecialMark1)
                 gr.DrawLine(pen1, location.X, location.Y + 22, location.X + 20, location.Y + 22);
         }
+        public void DrawSpot(IGraphics gr)
+        {
+            var l = 10;
+            var ol = 11;
+            gr.DrawLine(colorpen, locationC.X - ol - l, locationC.Y - ol - l, locationC.X - ol, locationC.Y - ol);
+            gr.DrawLine(colorpen, locationC.X + ol + l, locationC.Y - ol - l, locationC.X + ol, locationC.Y - ol);
+
+            gr.DrawLine(colorpen, locationC.X - ol - l, locationC.Y + ol + l, locationC.X - ol, locationC.Y + ol);
+            gr.DrawLine(colorpen, locationC.X + ol + l, locationC.Y + ol + l, locationC.X + ol, locationC.Y + ol);
+        }
         public void DrawConnections(IGraphics gr, Dialog dlg)
         {
             for (int i = 0; i < PhraseConnectReferences.Count; i++)

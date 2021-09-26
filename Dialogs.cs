@@ -54,6 +54,7 @@ namespace DialogMaker
         int FocusedPhrase = -1;
         int FocusedTimeline = -1;
         public int FocusedEditTimeline = -1;
+        private int spottedIndex = -1;
         bool TranslateFocus = false;
         bool ChooseConstraint = false;
         bool ChooseConstraintLost = false;
@@ -101,6 +102,7 @@ namespace DialogMaker
                 ChooseConstraint = false;
                 ChooseConstraintLost = false;
                 ChooseByAlign = false;
+                spottedIndex = -1;
 
                 dlginstance = value;
             }
@@ -309,6 +311,11 @@ namespace DialogMaker
                 GdiGraphics gg = new GdiGraphics(gr);
                 dlginstance.Draw(gg, ScaleZoom, FocusedEditPhrase, FocusedEditTimeline, Translate, DrawClips, (int)gr.ClipBounds.Right);
 
+                if (spottedIndex >= 0)
+                {
+                    var spot = dlginstance.Phrase(spottedIndex);
+                    spot.DrawSpot(gg);
+                }
                 //DrawTranslation Movement State
                 gr.Transform = new System.Drawing.Drawing2D.Matrix();
                 {
@@ -678,6 +685,29 @@ namespace DialogMaker
             this.Refresh();
 
             Changed = true;
+        }
+        public void Spot(int index, Phrase phrase, bool translateTo = true)
+        {
+            this.spottedIndex = index;
+            if (translateTo)
+            {
+                this.Translate = new Point((int)(-phrase.location.X + this.Size.Width * 0.5), (int)(-phrase.location.Y + this.Size.Height * 0.5));
+            }
+
+            this.Refresh();
+        }
+        public void SpotSelected(bool translateTo = true)
+        {
+            if (FocusedEditPhrase >= 0)
+            {
+                Spot(FocusedEditPhrase, dlginstance.Phrase(FocusedEditPhrase), translateTo);
+            }
+        }
+        public void UnSpot()
+        {
+            this.spottedIndex = -1;
+
+            this.Refresh();
         }
     }
 }

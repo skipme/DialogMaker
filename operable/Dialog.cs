@@ -588,6 +588,13 @@ namespace DialogMaker
                 phrases[i].MeasuredText = phrases[i].MeasuredLabel = SizeF.Empty;
             }
         }
+
+        public IEnumerable<(int, Phrase)> SearchPhrase(string contains, bool left = true, bool right = true)
+        {
+            return Enumerable.Range(0, phrases.Count).Where(idx => phrases[idx].Label.IndexOf(contains, StringComparison.OrdinalIgnoreCase) >= 0
+             || phrases[idx].Text.IndexOf(contains, StringComparison.OrdinalIgnoreCase) >= 0)
+                .Select(idx => (idx, phrases[idx]));
+        }
     }
 
 

@@ -884,5 +884,58 @@ namespace DialogMaker
                 // true type fonts supported only...
             }
         }
+        private class FindElementResultItem
+        {
+            public int phraseIdx;
+            public Phrase phraseRef;
+            public override string ToString()
+            {
+                return $"{phraseIdx}] {phraseRef.Label} ({phraseRef.location.X}; {phraseRef.location.Y})";
+            }
+        }
+        private void toolStripTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            var text = ((ToolStripTextBox)sender).Text;
+            if (text?.Length > 0)
+            {
+                FindComboSelection.Items.Clear();
+                foreach (var (pi, ph) in dialogs1.dlg.SearchPhrase(text))
+                {
+                    FindComboSelection.Items.Add(new FindElementResultItem { phraseRef = ph, phraseIdx = pi });
+                }
+                if (FindComboSelection.Items.Count > 0)
+                    FindComboSelection.SelectedIndex = 0;
+            }
+        }
+
+        private void FindComboSelection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FindComboSelection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (FindComboSelection.Items.Count > 0 && FindComboSelection.SelectedIndex >= 0)
+            {
+                var chosen = (FindElementResultItem)FindComboSelection.SelectedItem;
+                dialogs1.Spot(chosen.phraseIdx, chosen.phraseRef);
+            }
+        }
+
+        private void clearSpotToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogs1.UnSpot();
+        }
+
+        private void goToSelectedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogs1.SpotSelected();
+        }
+
+        private void anythingToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+
+            toolStripTextBox1_TextChanged(toolStripTextBox1, null);
+        }
     }
 }

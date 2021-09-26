@@ -87,6 +87,12 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.fontDialog1 = new System.Windows.Forms.FontDialog();
+            this.findToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.anythingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.FindComboSelection = new System.Windows.Forms.ToolStripComboBox();
+            this.goToSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearSpotToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
@@ -365,7 +371,8 @@
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
             this.historyToolStripMenuItem,
-            this.appearanceToolStripMenuItem});
+            this.appearanceToolStripMenuItem,
+            this.findToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(967, 24);
@@ -623,6 +630,56 @@
             this.label4.TabIndex = 25;
             this.label4.Text = "label4";
             // 
+            // findToolStripMenuItem
+            // 
+            this.findToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.anythingToolStripMenuItem,
+            this.goToSelectedToolStripMenuItem,
+            this.clearSpotToolStripMenuItem});
+            this.findToolStripMenuItem.Name = "findToolStripMenuItem";
+            this.findToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.findToolStripMenuItem.Text = "Find";
+            // 
+            // anythingToolStripMenuItem
+            // 
+            this.anythingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripTextBox1,
+            this.FindComboSelection});
+            this.anythingToolStripMenuItem.Name = "anythingToolStripMenuItem";
+            this.anythingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.anythingToolStripMenuItem.Text = "Anything";
+            this.anythingToolStripMenuItem.DropDownOpening += new System.EventHandler(this.anythingToolStripMenuItem_DropDownOpening);
+            // 
+            // toolStripTextBox1
+            // 
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Size = new System.Drawing.Size(200, 23);
+            this.toolStripTextBox1.TextChanged += new System.EventHandler(this.toolStripTextBox1_TextChanged);
+            // 
+            // FindComboSelection
+            // 
+            this.FindComboSelection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.FindComboSelection.Name = "FindComboSelection";
+            this.FindComboSelection.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.FindComboSelection.Size = new System.Drawing.Size(201, 23);
+            this.FindComboSelection.SelectedIndexChanged += new System.EventHandler(this.FindComboSelection_SelectedIndexChanged);
+            this.FindComboSelection.Click += new System.EventHandler(this.FindComboSelection_Click);
+            // 
+            // goToSelectedToolStripMenuItem
+            // 
+            this.goToSelectedToolStripMenuItem.Name = "goToSelectedToolStripMenuItem";
+            this.goToSelectedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.goToSelectedToolStripMenuItem.Text = "GoTo Selected";
+            this.goToSelectedToolStripMenuItem.Click += new System.EventHandler(this.goToSelectedToolStripMenuItem_Click);
+            // 
+            // clearSpotToolStripMenuItem
+            // 
+            this.clearSpotToolStripMenuItem.Name = "clearSpotToolStripMenuItem";
+            this.clearSpotToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearSpotToolStripMenuItem.Text = "ClearSpot";
+            this.clearSpotToolStripMenuItem.Click += new System.EventHandler(this.clearSpotToolStripMenuItem_Click);
+
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -724,6 +781,12 @@
         private System.Windows.Forms.ToolStripMenuItem appearanceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fontToolStripMenuItem;
         private System.Windows.Forms.FontDialog fontDialog1;
+        private System.Windows.Forms.ToolStripMenuItem findToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem anythingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripComboBox FindComboSelection;
+        private System.Windows.Forms.ToolStripMenuItem goToSelectedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearSpotToolStripMenuItem;
     }
 }
 
