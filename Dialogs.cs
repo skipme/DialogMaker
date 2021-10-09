@@ -23,7 +23,9 @@ namespace DialogMaker
 
         public delegate void StateChanged(bool changed);
         public event StateChanged OnStateChanged;
-
+        public Dialogs() : this(new jzip.Container())
+        {
+        }
         public Dialogs(jzip.Container imageContainer)
         {
             SetPhraseAttributesCount(4);
