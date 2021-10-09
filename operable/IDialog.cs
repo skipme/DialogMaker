@@ -43,5 +43,6 @@ namespace DialogMaker
 
         void SetFont(System.Drawing.Font fontRef); 
         IEnumerable<(int, Phrase)> SearchPhrase(string contains, bool left = true, bool right = true);
+        void AdjustPhrasePositionsToGrid(int gridSizeX, int gridSizeY);
     }
 }

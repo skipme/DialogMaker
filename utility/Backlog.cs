@@ -315,5 +315,9 @@ namespace DialogMaker
         {
             return baseDialog.SearchPhrase(contains, left, right);
         }
+        public void AdjustPhrasePositionsToGrid(int gridSizeX, int gridSizeY)
+        {
+            baseDialog.AdjustPhrasePositionsToGrid(gridSizeX, gridSizeY);
+        }
     }
 }

@@ -937,5 +937,35 @@ namespace DialogMaker
 
             toolStripTextBox1_TextChanged(toolStripTextBox1, null);
         }
+
+        private void snapToGridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogs1.SnapToGrid = !dialogs1.SnapToGrid;
+            snapToGridToolStripMenuItem.Checked = dialogs1.SnapToGrid;
+        }
+
+        private void x9ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogs1.SnapGridSize = 0;
+            x9ToolStripMenuItem.Checked = true;
+            x16ToolStripMenuItem.Checked = false;
+            x32ToolStripMenuItem.Checked = false;
+        }
+
+        private void x16ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogs1.SnapGridSize = 1;
+            x9ToolStripMenuItem.Checked = false;
+            x16ToolStripMenuItem.Checked = true;
+            x32ToolStripMenuItem.Checked = false;
+        }
+
+        private void x32ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogs1.SnapGridSize = 2;
+            x9ToolStripMenuItem.Checked = false;
+            x16ToolStripMenuItem.Checked = false;
+            x32ToolStripMenuItem.Checked = true;
+        }
     }
 }

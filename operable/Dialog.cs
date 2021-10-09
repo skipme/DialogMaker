@@ -595,6 +595,17 @@ namespace DialogMaker
              || phrases[idx].Text.IndexOf(contains, StringComparison.OrdinalIgnoreCase) >= 0)
                 .Select(idx => (idx, phrases[idx]));
         }
+        public void AdjustPhrasePositionsToGrid(int gridSizeX, int gridSizeY)
+        {
+            foreach (var ph in phrases)
+            {
+                var p = ph.position;
+                p.X = (int)(Math.Round((double)p.X / gridSizeX, MidpointRounding.ToEven) * gridSizeX);
+                p.Y = (int)(Math.Round((double)p.Y / gridSizeY, MidpointRounding.ToEven) * gridSizeY);
+
+                ph.position = p;
+            }
+        }
     }
 
 

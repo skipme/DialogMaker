@@ -86,6 +86,56 @@ namespace DialogMaker
         static Pen PenRed = new Pen(Color.Red, 2);
         static Pen PenGreen = new Pen(Color.Green, 2);
 
+        public int[][] GridSizes = new int[][] { new int[2] { 9, 9 }, new int[2] { 16, 16 }, new int[2] { 32, 32 } };
+        private int GridSizeX = 9;
+        private int GridSizeY = 9;
+
+        private int SnapGridSizeBacked;
+        public int SnapGridSize
+        {
+            get
+            {
+                return SnapGridSizeBacked;
+            }
+            set
+            {
+                if (value < 0)
+                    value = 0;
+                else if (value >= GridSizes.Length)
+                    value = GridSizes.Length - 1;
+
+                if (value != SnapGridSizeBacked)
+                {
+                    GridSizeX = GridSizes[value][0];
+                    GridSizeY = GridSizes[value][1];
+                    SnapGridSizeBacked = value;
+                    dlg.AdjustPhrasePositionsToGrid(GridSizeX, GridSizeY);
+                    this.Refresh();
+                }
+            }
+        }
+
+        private bool SnapToGridBacked = false;
+        public bool SnapToGrid
+        {
+            get
+            {
+                return SnapToGridBacked;
+            }
+            set
+            {
+                if (SnapToGridBacked != value)
+                {
+                    SnapToGridBacked = value;
+                    if (SnapToGridBacked)
+                    {
+                        dlg.AdjustPhrasePositionsToGrid(GridSizeX, GridSizeY);
+                        this.Refresh();
+                    }
+                }
+            }
+        }
+
         public DBacklog dlg
         {
             get
@@ -483,6 +533,11 @@ namespace DialogMaker
             }
             FocusedPhrase = phindex;
             movestart = e.Location;
+            if (SnapToGrid)
+            {
+                movestart.X = (int)(Math.Round((double)movestart.X / GridSizeX, MidpointRounding.ToEven) * GridSizeX);
+                movestart.Y = (int)(Math.Round((double)movestart.Y / GridSizeY, MidpointRounding.ToEven) * GridSizeY);
+            }
         }
         private void Dialogs_MouseMove(object sender, MouseEventArgs e)
         {
@@ -497,6 +552,25 @@ namespace DialogMaker
             m.Invert();
 
             Point movement = new Point(movestart.X - e.X, movestart.Y - e.Y);
+            if (FocusedPhrase != -1 && SnapToGrid)
+            {
+                Point point = new Point(e.X, e.Y);
+
+                point.X = (int)(Math.Round((double)point.X / GridSizeX, MidpointRounding.ToEven) * GridSizeX);
+                point.Y = (int)(Math.Round((double)point.Y / GridSizeY, MidpointRounding.ToEven) * GridSizeY);
+
+                if (movestart.X == point.X && movestart.Y == point.Y)
+                {
+                    return;
+                }
+                else
+                {
+
+                    movement.X = movestart.X - point.X;
+                    movement.Y = movestart.Y - point.Y;
+                    movestart = point;
+                }
+            }
             movement.X = -movement.X;
             movement.Y = -movement.Y;
             Point[] t = new Point[] { movement };
@@ -525,8 +599,8 @@ namespace DialogMaker
                 Translate.Y -= movestart.Y - e.Y;
                 //Translate.Offset(movement);
             }
-
-            movestart = e.Location;
+            if (!(SnapToGrid && FocusedPhrase >= 0))
+                movestart = e.Location;
             this.Refresh();
         }
 
@@ -584,33 +658,43 @@ namespace DialogMaker
         {
             if (dlginstance.Phrase(0) == null)
             {
-                dlginstance.AddPhrase(new Phrase(phraseAttributesCount, this.imageContainer)
+                var newph = new Phrase(phraseAttributesCount, this.imageContainer)
                 {
                     Text = "",
                     Label = _Label,
                     color = Dialog.XColors[0],
-                    position =
-                        new Point(this.Size.Width / 2, this.Size.Width / 2)
-                },
-                FocusedEditPhrase);
+                    position = new Point(this.Size.Width / 2, this.Size.Width / 2)
+                };
+                var point = newph.position;
+                point.X = (int)(Math.Round((double)point.X / GridSizeX, MidpointRounding.ToEven) * GridSizeX);
+                point.Y = (int)(Math.Round((double)point.Y / GridSizeY, MidpointRounding.ToEven) * GridSizeY);
+                newph.position = point;
+                dlginstance.AddPhrase(newph, FocusedEditPhrase);
 
                 this.Refresh();
                 Changed = true;
 
                 return;
             }
-            if (dlginstance.Phrase(FocusedEditPhrase) == null)
-                return;
-
-            dlginstance.AddPhrase(new Phrase(phraseAttributesCount, this.imageContainer)
+            else
             {
-                Text = "",
-                Label = _Label,
-                color = Dialog.XColors[0],
-                position =
-                    new Point(dlginstance.Phrase(FocusedEditPhrase).position.X, dlginstance.Phrase(FocusedEditPhrase).position.Y - 40)
-            },
-                FocusedEditPhrase);
+                if (dlginstance.Phrase(FocusedEditPhrase) == null)
+                    return;
+
+                var newph = new Phrase(phraseAttributesCount, this.imageContainer)
+                {
+                    Text = "",
+                    Label = _Label,
+                    color = Dialog.XColors[0],
+                    position =
+                        new Point(dlginstance.Phrase(FocusedEditPhrase).position.X, dlginstance.Phrase(FocusedEditPhrase).position.Y - 40)
+                };
+                var point = newph.position;
+                point.X = (int)(Math.Round((double)point.X / GridSizeX, MidpointRounding.ToEven) * GridSizeX);
+                point.Y = (int)(Math.Round((double)point.Y / GridSizeY, MidpointRounding.ToEven) * GridSizeY);
+                newph.position = point;
+                dlginstance.AddPhrase(newph, FocusedEditPhrase);
+            }
 
             this.Refresh();
 
