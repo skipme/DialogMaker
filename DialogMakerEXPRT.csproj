@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="jzip\Container.cs" />
+    <Compile Include="jzip\EmptyContainer.cs" />
     <Compile Include="operable\IDialog.cs" />
     <Compile Include="operable\IImageContainer.cs" />
     <Compile Include="PWD_INPUT.cs">

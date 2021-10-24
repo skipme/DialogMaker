@@ -44,6 +44,7 @@ namespace DialogMaker
             jzip.Container container = new jzip.Container(null);
             Dialog dlg = new Dialog(container);
             dialogs1.dlg = new DBacklog(dlg);
+            dialogs1.imageContainer = container;
         }
 
         private void Form1_Shown(object sender, EventArgs e)

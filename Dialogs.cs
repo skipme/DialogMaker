@@ -23,10 +23,10 @@ namespace DialogMaker
 
         public delegate void StateChanged(bool changed);
         public event StateChanged OnStateChanged;
-        public Dialogs() : this(new jzip.Container())
+        public Dialogs() : this(new jzip.EmptyContainer())
         {
         }
-        public Dialogs(jzip.Container imageContainer)
+        public Dialogs(IImageContainer imageContainer)
         {
             SetPhraseAttributesCount(4);
             InitializeComponent();
@@ -81,7 +81,7 @@ namespace DialogMaker
         AlignOrientation orientation;
 
         Point movestart;
-        public jzip.Container imageContainer;
+        public IImageContainer imageContainer;
         DBacklog dlginstance;
         Point Translate = new Point();
 
